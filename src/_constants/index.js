@@ -1,9 +1,2 @@
-import { userConstants } from "./user.constants";
-import { alertConstants } from "./alert.constants";
-
-const allConstants = {
-  userConstants,
-  alertConstants,
-};
-
-export default allConstants;
+export * from "./user.constants";
+export * from "./alert.constants";

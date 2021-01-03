@@ -90,12 +90,12 @@ function _delete(id, dispatch) {
   );
 
   function request(id) {
-    return { type: userActions.DELETE_REQUEST, id };
+    return { type: userConstants.DELETE_REQUEST, id };
   }
   function success(id) {
-    return { type: userActions.DELETE_SUCCESS, id };
+    return { type: userConstants.DELETE_SUCCESS, id };
   }
   function failure(id, error) {
-    return { type: userActions.DELETE_FAILURE, id, error };
+    return { type: userConstants.DELETE_FAILURE, id, error };
   }
 }

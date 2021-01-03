@@ -1,4 +1,4 @@
-import config from "../_config";
+import { config } from "../_config";
 import { authHeader } from "../_helpers";
 
 export const userService = {

@@ -12,7 +12,7 @@ import { RegisterPage } from "../RegisterPage";
 export const App = () => {
   useEffect(() => {
     history.listen((location, action) => {
-      alertActions.clearAlerts();
+      alertActions.clear();
     });
   }, []);
 

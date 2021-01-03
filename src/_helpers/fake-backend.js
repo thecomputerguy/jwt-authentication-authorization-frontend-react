@@ -1,12 +1,12 @@
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
-export function configureBackend() {
+export function configureFakeBackend() {
   let realFetch = window.fetch;
   window.fetch = (url, opts) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (url.endsWith("/users/authenticate") && opts.method === "POST") {
-          let params = JSON.stringify(opts.body);
+          let params = JSON.parse(opts.body);
           let filteredUsers = users.filter((user) => {
             return (
               user.username === params.username &&
@@ -75,7 +75,7 @@ export function configureBackend() {
           let duplicateUser = users.filter(
             (user) => user.username === newUser.username
           );
-          if (duplicateUser) {
+          if (duplicateUser.length >= 1) {
             reject(`username with ${newUser.username} is already taken`);
             return;
           }

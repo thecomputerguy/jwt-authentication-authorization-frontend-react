@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../_actions";
 
 export const RegisterPage = () => {
@@ -14,6 +14,8 @@ export const RegisterPage = () => {
     submitted: false,
   });
 
+  const dispatch = useDispatch();
+
   function handleChange(e) {
     const { name, value } = e.target;
     const { user } = formState;
@@ -25,7 +27,7 @@ export const RegisterPage = () => {
     setFormState((state) => ({ ...state, submitted: true }));
     const { user } = formState;
     if (user.username && user.password && user.firstName && user.lastName) {
-      userActions.register(user);
+      userActions.register(user, dispatch);
     }
   }
 
@@ -47,7 +49,7 @@ export const RegisterPage = () => {
             className="form-control"
             name="firstName"
             value={user.firstName}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           {submitted && !user.firstName && (
             <div className="help-block">First Name is required</div>
@@ -64,7 +66,7 @@ export const RegisterPage = () => {
             className="form-control"
             name="lastName"
             value={user.lastName}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           {submitted && !user.lastName && (
             <div className="help-block">Last Name is required</div>
@@ -81,7 +83,7 @@ export const RegisterPage = () => {
             className="form-control"
             name="username"
             value={user.username}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           {submitted && !user.username && (
             <div className="help-block">Username is required</div>
@@ -98,7 +100,7 @@ export const RegisterPage = () => {
             className="form-control"
             name="password"
             value={user.password}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           {submitted && !user.password && (
             <div className="help-block">Password is required</div>
@@ -107,7 +109,10 @@ export const RegisterPage = () => {
         <div className="form-group">
           <button className="btn btn-primary">Register</button>
           {registering && (
-            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <img
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+              alt=""
+            />
           )}
           <Link to="/login" className="btn btn-link">
             Cancel

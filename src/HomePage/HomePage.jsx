@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { userActions } from "../_actions";
 
-function handleDeleteUser(id) {
-  return (e) => userActions.delete(id);
+function handleDeleteUser(id, dispatch) {
+  return (e) => userActions.delete(id, dispatch);
 }
 
 export const HomePage = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    userActions.getAll();
-  }, []);
+    userActions.getAll(dispatch);
+  }, [dispatch]);
 
   const { users, authentication: user } = useSelector((state) => state);
 
@@ -24,18 +26,23 @@ export const HomePage = () => {
       {users.items && (
         <ul>
           {users.items.map((user, index) => {
-            <li key={user.id}>
-              {user.firstName + " " + user.lastName}
-              {user.deleting ? (
-                <em> - Deleting...</em>
-              ) : user.deleteError ? (
-                <span className="text-danger">- ERROR: {user.deleteError}</span>
-              ) : (
-                <span>
-                  - <a onClick={handleDeleteUser(user.id)}>Delete</a>
-                </span>
-              )}
-            </li>;
+            return (
+              <li key={user.id}>
+                {user.firstName + " " + user.lastName}
+                {user.deleting ? (
+                  <em> - Deleting...</em>
+                ) : user.deleteError ? (
+                  <span className="text-danger">
+                    - ERROR: {user.deleteError}
+                  </span>
+                ) : (
+                  <span>
+                    -{" "}
+                    <a onClick={handleDeleteUser(user.id, dispatch)}>Delete</a>
+                  </span>
+                )}
+              </li>
+            );
           })}
         </ul>
       )}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { userActions } from "../_actions";
 
@@ -10,6 +10,8 @@ export const LoginPage = () => {
     submitted: false,
   });
 
+  const dispatch = useDispatch();
+
   function handleChange(e) {
     const { name, value } = e.target;
     setformState((state) => ({ ...state, [name]: value }));
@@ -19,7 +21,7 @@ export const LoginPage = () => {
     e.preventDefault();
     const { username, password } = formState;
     if (username && password) {
-      userActions.login(username, password);
+      userActions.login(username, password, dispatch);
     }
   }
 
@@ -31,7 +33,9 @@ export const LoginPage = () => {
       <h2>Login</h2>
       <form name="form" onSubmit={handleSubmit}>
         <div
-          className={"form-group"(submitted && !username ? "has-error" : "")}
+          className={
+            "form-group" + (submitted && !username ? " has-error" : "")
+          }
         >
           <label htmlFor="username">Username</label>
           <input
@@ -46,7 +50,7 @@ export const LoginPage = () => {
           )}
         </div>
         <div
-          className={"form-group"(submitted && !password ? "has-error" : "")}
+          className={"form-group" + (submitted && !password ? "has-error" : "")}
         >
           <label htmlFor="password">Password</label>
           <input
